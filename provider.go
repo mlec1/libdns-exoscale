@@ -57,8 +57,10 @@ func (p *Provider) StringToDNSDomainRecordRequestType(recordType string) (egosca
 func (p *Provider) initClient() error {
 	if p.client == nil {
 		// Create new Exoscale client using the provided api_key and api_secret
+		// TODO: If exoscale wants the UserAgent to be set for Caddy, then we will need to set it as parameter of the Provider
         client, err := egoscale.NewClient(
             credentials.NewStaticCredentials(p.APIKey, p.APISecret),
+            egoscale.ClientOptWithUserAgent("libdns/exoscale"),
         )
 
         if err != nil {
